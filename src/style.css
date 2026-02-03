@@ -1,0 +1,430 @@
+@import "tailwindcss";
+
+/* Custom theme configuration */
+@theme {
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  
+  /* Primary colors */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  
+  /* Accent colors */
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  
+  /* Surface colors */
+  --color-surface-50: #f8fafc;
+  --color-surface-100: #f1f5f9;
+  --color-surface-200: #e2e8f0;
+  --color-surface-800: #1e293b;
+  --color-surface-900: #0f172a;
+  --color-surface-950: #020617;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ============================================
+   LIGHT THEME (Default)
+   ============================================ */
+.theme-light {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+  color: #1e293b;
+}
+
+.theme-light .glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.theme-light .btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, var(--color-primary-500), var(--color-primary-600));
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+  transition: all 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+}
+
+.theme-light .btn-primary:hover {
+  background: linear-gradient(to right, var(--color-primary-400), var(--color-primary-500));
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.4);
+}
+
+.theme-light .btn-primary:active {
+  transform: scale(0.95);
+}
+
+.theme-light .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.theme-light .btn-secondary {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.theme-light .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.theme-light .input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  color: #1e293b;
+  transition: all 0.2s;
+}
+
+.theme-light .input-field::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.theme-light .input-field:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+.theme-light .winner-glow {
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.4);
+}
+
+/* Light theme - Navbar */
+.theme-light .tab-container {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.theme-light .tab-inactive {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.theme-light .tab-inactive:hover {
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.theme-light .settings-btn {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.theme-light .settings-btn:hover {
+  color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.theme-light .text-muted {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.theme-light .text-danger {
+  color: #dc2626;
+}
+
+/* Light theme - Panel components (Participants, History) */
+.theme-light .panel-title {
+  color: #1e293b;
+}
+
+.theme-light .panel-count {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.theme-light .panel-text {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.theme-light .panel-muted {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.theme-light .panel-border {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-light .participant-item {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.theme-light .participant-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.theme-light .history-item {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.theme-light .game-badge {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.theme-light .bulk-add-btn {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.theme-light .bulk-add-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Light theme - Settings Modal (dark modal for contrast) */
+.theme-light .settings-modal {
+  background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  color: #f1f5f9;
+}
+
+.theme-light .setting-row {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .settings-modal .text-muted {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-light .close-btn {
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-light .close-btn:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   DARK THEME
+   ============================================ */
+.theme-dark {
+  background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+  color: #f1f5f9;
+}
+
+.theme-dark .glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+}
+
+.theme-dark .btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, var(--color-primary-500), var(--color-primary-600));
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.25);
+  transition: all 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+}
+
+.theme-dark .btn-primary:hover {
+  background: linear-gradient(to right, var(--color-primary-400), var(--color-primary-500));
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.3);
+}
+
+.theme-dark .btn-primary:active {
+  transform: scale(0.95);
+}
+
+.theme-dark .btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.theme-dark .btn-secondary {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.theme-dark .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  color: white;
+  transition: all 0.2s;
+}
+
+.theme-dark .input-field::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.theme-dark .input-field:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+.theme-dark .winner-glow {
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.5);
+}
+
+/* Dark theme - Navbar */
+.theme-dark .tab-container {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .tab-inactive {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .tab-inactive:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .settings-btn {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .settings-btn:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .text-muted {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-dark .text-danger {
+  color: #f87171;
+}
+
+/* Dark theme - Settings Modal */
+.theme-dark .settings-modal {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  color: #f1f5f9;
+}
+
+.theme-dark .setting-row {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .close-btn {
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .close-btn:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark theme - Panel components (Participants, History) */
+.theme-dark .panel-title {
+  color: #f1f5f9;
+}
+
+.theme-dark .panel-count {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.theme-dark .panel-text {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-dark .panel-muted {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.theme-dark .panel-border {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .participant-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .participant-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .history-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .game-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .bulk-add-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-dark .bulk-add-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   SHARED STYLES
+   ============================================ */
+.card {
+  padding: 1.5rem;
+}
+
+.glow {
+  box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+}
