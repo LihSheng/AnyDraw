@@ -2,6 +2,8 @@
 
 A modern, beautiful collection of lucky draw tools built with **Vue 3 + Vite + Tailwind CSS**.
 
+🌐 **Live Demo:** [https://lihsheng.github.io/AnyDraw/](https://lihsheng.github.io/AnyDraw/)
+
 ![AnyDraw Screenshot](https://img.shields.io/badge/Vue-3-brightgreen) ![Vite](https://img.shields.io/badge/Vite-5-646CFF) ![Tailwind](https://img.shields.io/badge/Tailwind-4-38BDF8)
 
 ## ✨ Features
@@ -77,6 +79,10 @@ src/
 - **Vite** - Lightning-fast dev server
 - **Tailwind CSS 4** - Utility-first styling
 - **Bun** - Fast JavaScript runtime & package manager
+
+## 🚀 Deployment
+
+This project auto-deploys to GitHub Pages via GitHub Actions on every push to `main`.
 
 ## 📄 License
 
