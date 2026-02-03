@@ -176,11 +176,26 @@ function spin() {
 }
 
 function determineWinner() {
-  const normalizedRotation = currentRotation.value % 360
+  // Normalize rotation to 0-360 range
+  let normalizedRotation = currentRotation.value % 360
+  if (normalizedRotation < 0) normalizedRotation += 360
+  
   const segmentAngle = 360 / segments.value.length
-  // Account for pointer at top (90 degrees offset)
-  const adjustedRotation = (360 - normalizedRotation + 90) % 360
-  const winnerIndex = Math.floor(adjustedRotation / segmentAngle) % segments.value.length
+  
+  // The pointer is fixed at the top (0 degrees position)
+  // Segments are drawn starting from the top, going clockwise:
+  //   - Segment 0: 0° to segmentAngle
+  //   - Segment 1: segmentAngle to 2*segmentAngle
+  //   - etc.
+  // 
+  // When the wheel rotates CLOCKWISE by R degrees:
+  //   - A point originally at angle A is now at angle (A + R)
+  //   - The pin at 0° is now pointing at what was originally at (360 - R)°
+  //
+  // So we find which segment contains the position (360 - R)°
+  
+  const pointerPosition = (360 - normalizedRotation + 360) % 360
+  const winnerIndex = Math.floor(pointerPosition / segmentAngle) % segments.value.length
   
   winner.value = segments.value[winnerIndex]
   emit('winner', winner.value)

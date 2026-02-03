@@ -1,19 +1,23 @@
 <template>
   <div class="flex flex-col items-center gap-6">
+    <!-- Card Count Indicator -->
+    <div v-if="participants.length >= 2" class="glass px-4 py-2 text-center">
+      <span class="text-white/60 text-sm">🃏 {{ participants.length }} cards in deck</span>
+    </div>
+
     <!-- Cards Display -->
-    <div class="relative h-[300px] w-[400px] flex items-center justify-center">
+    <div class="cards-container" :class="{ 'scrollable': cards.length > 7 }">
       <!-- Card Stack/Spread -->
-      <TransitionGroup name="cards" tag="div" class="relative w-full h-full">
+      <TransitionGroup name="cards" tag="div" class="cards-grid">
         <div
           v-for="(card, index) in displayCards"
           :key="card.id"
-          class="absolute top-1/2 left-1/2 w-40 h-56 -mt-28 -ml-20
-                 rounded-xl shadow-2xl cursor-pointer transition-all duration-500"
+          class="card-item rounded-xl shadow-2xl cursor-pointer transition-all duration-500"
           :class="[
             isShuffling ? 'animate-shuffle' : '',
-            card.isWinner ? 'winner-glow z-50' : ''
+            card.isWinner ? 'winner-glow' : '',
+            card.revealed && !card.isWinner ? 'revealed-non-winner' : ''
           ]"
-          :style="getCardStyle(index, card.isWinner)"
           @click="!isShuffling && !winner && pickCard(index)"
         >
           <!-- Card Back -->
@@ -23,18 +27,19 @@
                    border-4 border-white/20 flex items-center justify-center
                    hover:scale-105 transition-transform"
           >
-            <div class="text-6xl">🎴</div>
+            <div class="text-4xl">🎴</div>
           </div>
           
-          <!-- Card Front (Revealed Winner) -->
+          <!-- Card Front (Revealed) -->
           <div 
             v-else
-            class="w-full h-full rounded-xl bg-gradient-to-br from-accent-400 to-accent-600
-                   border-4 border-white/30 flex flex-col items-center justify-center p-4
-                   text-surface-900"
+            class="w-full h-full rounded-xl border-4 flex flex-col items-center justify-center p-3"
+            :class="card.isWinner 
+              ? 'bg-gradient-to-br from-accent-400 to-accent-600 border-white/30 text-surface-900' 
+              : 'bg-gradient-to-br from-surface-600 to-surface-700 border-white/10 text-white/70'"
           >
-            <div class="text-3xl mb-2">🏆</div>
-            <p class="font-bold text-center text-lg break-words">{{ card.name }}</p>
+            <div class="text-2xl mb-1">{{ card.isWinner ? '🏆' : '📋' }}</div>
+            <p class="font-bold text-center text-sm break-words line-clamp-2">{{ card.name }}</p>
           </div>
         </div>
       </TransitionGroup>
@@ -101,8 +106,8 @@ const isShuffling = ref(false)
 const winner = ref(null)
 
 const displayCards = computed(() => {
-  // Show max 7 cards for visual clarity
-  return cards.value.slice(0, 7)
+  // Show all cards
+  return cards.value
 })
 
 function initCards() {
@@ -185,6 +190,13 @@ function pickCard(index) {
   selectedCard.isWinner = true
   winner.value = selectedCard.name
   
+  // Reveal all other cards after a short delay
+  setTimeout(() => {
+    cards.value.forEach(card => {
+      card.revealed = true
+    })
+  }, 500)
+  
   emit('winner', selectedCard.name)
 }
 
@@ -199,14 +211,53 @@ watch(() => props.participants, () => {
 </script>
 
 <style scoped>
+.cards-container {
+  width: 100%;
+  max-width: 500px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards-container.scrollable {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+.card-item {
+  width: 100px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.winner-glow {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.revealed-non-winner {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
 .animate-shuffle {
   animation: shuffle 0.15s ease-in-out;
 }
 
 @keyframes shuffle {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-20px) rotate(-5deg); }
-  75% { transform: translateX(20px) rotate(5deg); }
+  25% { transform: translateX(-10px) rotate(-3deg); }
+  75% { transform: translateX(10px) rotate(3deg); }
 }
 
 .cards-move {
@@ -223,5 +274,13 @@ watch(() => props.participants, () => {
   0% { transform: scale(0); opacity: 0; }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); opacity: 1; }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
