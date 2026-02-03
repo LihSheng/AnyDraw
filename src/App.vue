@@ -14,21 +14,21 @@
     <div class="max-w-7xl mx-auto px-4 pb-8">
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        <!-- Left Panel - Participants (for wheel/cards) -->
-        <div v-if="activeGame !== 'number'" class="lg:col-span-1 order-2 lg:order-1">
+        <!-- Left Panel - Participants -->
+        <div class="lg:col-span-1 order-2 lg:order-1">
           <ParticipantList
             :participants="participants"
+            :active-game="activeGame"
             @add="addParticipant"
             @remove="removeParticipant"
             @clear="clearParticipants"
+            @share="handleShare"
+            @import-list="handleImport"
           />
         </div>
 
         <!-- Main Game Area -->
-        <div 
-          class="lg:col-span-2 order-1 lg:order-2"
-          :class="{ 'lg:col-span-3': activeGame === 'number' }"
-        >
+        <div class="lg:col-span-2 order-1 lg:order-2">
           <div class="glass p-8 flex items-center justify-center min-h-[500px]">
             <KeepAlive>
               <component 
@@ -58,6 +58,7 @@
       @toggle-sound="toggleSound"
       @toggle-party="toggleParty"
       @toggle-theme="toggleTheme"
+      @clear-data="clearAllData"
     />
   </div>
 </template>
@@ -82,21 +83,62 @@ const showSettings = ref(false)
 
 // Composables
 const { 
-  participants, 
-  addParticipant, 
-  removeParticipant, 
-  clearParticipants,
+  wheelParticipants,
+  cardParticipants,
+  numberParticipants,
+  addParticipant: addParticipantToStorage,
+  removeParticipant: removeParticipantFromStorage,
+  clearParticipants: clearParticipantsInStorage,
+  shareParticipants,
   history,
   addToHistory,
   clearHistory,
   settings,
   toggleSound,
   toggleParty,
-  toggleTheme
+  toggleTheme,
+  clearAllData
 } = useStorage()
 
 const { playWinner, playClick } = useSoundEffects(settings)
 const { startConfetti } = useConfetti(settings)
+
+// Computed property for current game's participants
+const participants = computed(() => {
+  switch (activeGame.value) {
+    case 'wheel': return wheelParticipants.value
+    case 'cards': return cardParticipants.value
+    case 'number': return numberParticipants.value
+    default: return []
+  }
+})
+
+// Wrappers for participant actions to include game type
+function addParticipant(name) {
+  return addParticipantToStorage(activeGame.value, name)
+}
+
+function removeParticipant(index) {
+  removeParticipantFromStorage(activeGame.value, index)
+}
+
+function clearParticipants() {
+  clearParticipantsInStorage(activeGame.value)
+}
+
+// Handle share action from ParticipantList
+function handleShare(targetGame) {
+  if (shareParticipants(activeGame.value, targetGame)) {
+    // Optional: could show a toast here
+    // alert(`Shared to ${targetGame}!`)
+  }
+}
+
+function handleImport(sourceGame) {
+  if (shareParticipants(sourceGame, activeGame.value)) {
+    // Optional: could show a toast here
+  }
+}
 
 // Apply theme class to document element for teleported modals
 watchEffect(() => {

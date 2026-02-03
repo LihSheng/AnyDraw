@@ -92,8 +92,27 @@
             </div>
           </div>
 
+          <!-- Danger Zone -->
+          <div class="mt-6 pt-4 border-t border-current/10">
+            <div class="flex items-center justify-between p-4 bg-red-500/10 rounded-xl border border-red-500/20">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🗑️</span>
+                <div>
+                  <span class="font-medium text-red-500">Clear Data</span>
+                  <p class="text-xs text-red-500/60">Reset all app data</p>
+                </div>
+              </div>
+              <button
+                @click="confirmClear"
+                class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-lg transition-colors"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+
           <!-- Footer -->
-          <div class="mt-6 pt-4 border-t border-current/10 text-center">
+          <div class="mt-6 text-center">
             <p class="text-xs text-muted">
               AnyDraw v1.0 • Lucky Draw Collection
             </p>
@@ -116,7 +135,13 @@ defineProps({
   }
 })
 
-defineEmits(['close', 'toggle-sound', 'toggle-party', 'toggle-theme'])
+const emit = defineEmits(['close', 'toggle-sound', 'toggle-party', 'toggle-theme', 'clear-data'])
+
+function confirmClear() {
+  if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+    emit('clear-data')
+  }
+}
 </script>
 
 <style scoped>
